@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <a class="navbar-brand" href="/">Image Rack</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#top">Back to top</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="RegExp here" aria-label="Filter" name="filter">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
+        </form>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block files %}
+    <div class="container mt-5">
+        <h1 class="text-white">Directories</h1>
+        <div class="list-group">
+        {% for rows in folders %}
+            <a class="list-group-item list-group-item-light" href="{{ rows.path }}">{{ rows.name }}</a>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block images %}
+    {% if images|length > 0 %}
+        <div class="container mt-5">
+            <h1 class="text-white">Images</h1>
+            {% for rows in images %}
+                <div class="row">
+                {% for image in rows %}
+                    <div class="col-{{ 12 // cols }}">
+                        <figure class="text-center">
+                            <a class="image" href="{{ image.src }}" style="width: {{ image.width }}px; height: {{ image.height }}px">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image.src }}?w={{ image.width }}&amp;h={{ image.height }}" width="{{ image.width }}" height="{{ image.height }}" />
+                            </a>
+                            <figcaption class="figure-caption"><a class="text-secondary" href="{{ image.src }}">{{ image.name }}</a></figcaption>
+                        </figure>
+                    </div>
+                {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
